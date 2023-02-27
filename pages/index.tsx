@@ -1,6 +1,7 @@
 import useSwr from 'swr';
 import { useEffect, useState } from 'react';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import { FormControl, Button, TextField, Autocomplete } from '@mui/material';
 import styles from '@/styles/Home.module.css';
 import { IList, ILocation } from '@/types/types';
@@ -9,6 +10,7 @@ import { formatLocation } from '@/helpers/formatLocations';
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function Home() {
+    const router = useRouter();
     const [fromValue, setFromValue] = useState('');
     const [toValue, setToValue] = useState('');
     const [valueToSearch, setValueToSearch] = useState('');
@@ -28,7 +30,10 @@ export default function Home() {
         setValueToSearch(value);
     };
 
-    const searchConnections = () => {};
+    const searchConnections = (e) => {
+        e.preventDefault();
+        router.push({ pathname: '/schedule', query: { from: fromValue, to: toValue } });
+    };
     return (
         <>
             <Head>
@@ -39,7 +44,7 @@ export default function Home() {
             </Head>
             <main className={styles.main}>
                 <div className={styles.center}>
-                    <form className={styles.container}>
+                    <form className={styles.container} onSubmit={searchConnections}>
                         <FormControl>
                             <Autocomplete
                                 disablePortal
@@ -48,6 +53,9 @@ export default function Home() {
                                 options={fromStationsList}
                                 sx={{ width: 300 }}
                                 value={fromValue}
+                                onChange={(e, selected: IList) =>
+                                    searchValue(selected?.value, true)
+                                }
                                 renderInput={(params) => (
                                     <TextField
                                         {...params}
@@ -67,6 +75,7 @@ export default function Home() {
                                 options={toStationsList}
                                 sx={{ width: 300 }}
                                 value={toValue}
+                                onChange={(e, selected: IList) => searchValue(selected?.value)}
                                 renderInput={(params) => (
                                     <TextField
                                         {...params}
@@ -77,7 +86,7 @@ export default function Home() {
                                 )}
                             />
                         </FormControl>
-                        <Button type="submit" variant="outlined" onSubmit={searchConnections}>
+                        <Button type="submit" variant="outlined">
                             Search
                         </Button>
                     </form>

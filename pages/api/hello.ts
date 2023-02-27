@@ -6,6 +6,5 @@ type Data = {
 };
 
 export default function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
-    debugger;
     res.status(200).json({ name: 'John Doe' });
 }
