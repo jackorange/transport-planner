@@ -13,12 +13,21 @@ export interface ITransferInfo {
     arrival?: string;
     station: { name: string };
 }
+export interface ISectionInfo {
+    arrival?: string;
+    departure?: string;
+    station: IStation;
+}
+export interface ISection {
+    arrival: ISectionInfo;
+    departure: ISectionInfo;
+}
 export interface IConnection {
     id: string;
     duration: string;
     from: ITransferInfo;
     to: ITransferInfo;
-    sections: any[];
+    sections: ISection[];
     products: string[];
     transfers: number;
 }

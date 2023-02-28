@@ -5,50 +5,44 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { IConnection } from '@/types/types';
+import { timestampToDate } from '@/helpers/formatDate';
 
 interface IScheduleDetails {
     connection?: IConnection;
 }
 
 const ScheduleDetails: React.FC<IScheduleDetails> = ({ connection }) => {
+    const renderConnectionSections = () => {
+        return connection?.sections.map((el) => {
+            return (
+                <Accordion key={el.departure.arrival}>
+                    <AccordionSummary
+                        expandIcon={<ExpandMoreIcon />}
+                        aria-controls="panel1a-content"
+                        id="panel1a-header">
+                        <Typography>
+                            {el.departure.station.name} - {el.arrival.station.name}
+                        </Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                        <Typography>
+                            Departure: {timestampToDate(el.departure.departure as string)}
+                        </Typography>
+                        <Typography>
+                            Arrival: {timestampToDate(el.arrival.arrival as string)}
+                        </Typography>
+                    </AccordionDetails>
+                </Accordion>
+            );
+        });
+    };
     return (
         <div>
-            <Accordion>
-                <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel1a-content"
-                    id="panel1a-header">
-                    <Typography>Accordion 1</Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                    <Typography>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                        malesuada lacus ex, sit amet blandit leo lobortis eget.
-                    </Typography>
-                </AccordionDetails>
-            </Accordion>
-            <Accordion>
-                <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel2a-content"
-                    id="panel2a-header">
-                    <Typography>Accordion 2</Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                    <Typography>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                        malesuada lacus ex, sit amet blandit leo lobortis eget.
-                    </Typography>
-                </AccordionDetails>
-            </Accordion>
-            <Accordion disabled>
-                <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel3a-content"
-                    id="panel3a-header">
-                    <Typography>Disabled Accordion</Typography>
-                </AccordionSummary>
-            </Accordion>
+            <Typography marginBottom={3} fontWeight="bold">
+                {connection?.from.station.name} - {connection?.to.station.name}
+            </Typography>
+            <Typography marginBottom={3}>Sections </Typography>
+            {renderConnectionSections()}
         </div>
     );
 };
