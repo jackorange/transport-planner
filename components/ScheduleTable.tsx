@@ -9,6 +9,8 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import { IConnection } from '@/types/types';
 import { timestampToDate } from '@/helpers/formatDate';
+import ScheduleModal from './ScheduleModal';
+import ScheduleDetails from './ScheduleDetails';
 
 interface Column {
     id: 'direction' | 'departure' | 'arrivalTime' | 'journeyLength' | 'stopOversAmount';
@@ -53,10 +55,13 @@ function createData(
 interface IScheduleTable {
     connections: IConnection[];
 }
+
 export const ScheduleTable: React.FC<IScheduleTable> = ({ connections }) => {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
     const [tableData, setTableData] = React.useState<Data[]>();
+    const [isModalOpen, setIsModalOpen] = React.useState(false);
+    const [modalConnection, setModalConnection] = React.useState<IConnection>();
 
     React.useEffect(() => {
         if (connections && connections.length > 0) {
@@ -81,6 +86,18 @@ export const ScheduleTable: React.FC<IScheduleTable> = ({ connections }) => {
     const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
         setRowsPerPage(+event.target.value);
         setPage(0);
+    };
+
+    const redirectToDetailsPage = (row: Data) => {
+        const currentConnection = connections.find(
+            (el) =>
+                timestampToDate(el.from.departure as string) === row.departure &&
+                timestampToDate(el.to.arrival as string) === row.arrivalTime
+        );
+        if (currentConnection) {
+            setModalConnection(currentConnection);
+            setIsModalOpen(true);
+        }
     };
 
     return (
@@ -109,7 +126,8 @@ export const ScheduleTable: React.FC<IScheduleTable> = ({ connections }) => {
                                             hover
                                             role="checkbox"
                                             tabIndex={-1}
-                                            key={row.population}>
+                                            key={row.departure}
+                                            onClick={() => redirectToDetailsPage(row)}>
                                             {columns.map((column) => {
                                                 const value = row[column.id];
                                                 return (
@@ -135,6 +153,9 @@ export const ScheduleTable: React.FC<IScheduleTable> = ({ connections }) => {
                 onPageChange={handleChangePage}
                 onRowsPerPageChange={handleChangeRowsPerPage}
             />
+            <ScheduleModal onCloseModal={() => setIsModalOpen(false)} isOpen={isModalOpen}>
+                <ScheduleDetails connection={modalConnection} />
+            </ScheduleModal>
         </Paper>
     );
 };

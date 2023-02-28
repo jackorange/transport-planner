@@ -14,6 +14,7 @@ export interface ITransferInfo {
     station: { name: string };
 }
 export interface IConnection {
+    id: string;
     duration: string;
     from: ITransferInfo;
     to: ITransferInfo;
