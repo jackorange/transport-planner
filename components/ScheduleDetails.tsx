@@ -1,11 +1,12 @@
-import React from 'react';
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { IConnection } from '@/types/types';
+import Accordion from '@mui/material/Accordion';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import Typography from '@mui/material/Typography';
+import React from 'react';
+
 import { timestampToDate } from '@/helpers/formatDate';
+import { IConnection } from '@/types/types';
 
 interface IScheduleDetails {
     connection?: IConnection;

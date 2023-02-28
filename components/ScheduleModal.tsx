@@ -1,9 +1,9 @@
-import * as React from 'react';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
+import * as React from 'react';
 
 const style = {
-    position: 'absolute' as 'absolute',
+    position: 'absolute' as const,
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',

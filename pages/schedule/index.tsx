@@ -1,10 +1,11 @@
+import { CircularProgress } from '@mui/material';
+import { useRouter } from 'next/router';
 import React from 'react';
 import useSwr from 'swr';
-import { useRouter } from 'next/router';
-import { ISchedule } from '@/types/types';
+
 import ScheduleTable from '@/components/ScheduleTable';
-import { CircularProgress } from '@mui/material';
 import styles from '@/styles/Home.module.css';
+import { ISchedule } from '@/types/types';
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 

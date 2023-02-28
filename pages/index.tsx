@@ -1,11 +1,12 @@
-import useSwr from 'swr';
-import { useEffect, useState } from 'react';
+import { Autocomplete, Button, FormControl, TextField } from '@mui/material';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { FormControl, Button, TextField, Autocomplete } from '@mui/material';
+import { useEffect, useState } from 'react';
+import useSwr from 'swr';
+
+import { formatLocation } from '@/helpers/formatLocations';
 import styles from '@/styles/Home.module.css';
 import { IList, ILocation } from '@/types/types';
-import { formatLocation } from '@/helpers/formatLocations';
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -30,7 +31,7 @@ export default function Home() {
         setValueToSearch(value);
     };
 
-    const searchConnections = (e) => {
+    const searchConnections = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         router.push({ pathname: '/schedule', query: { from: fromValue, to: toValue } });
     };
@@ -49,12 +50,10 @@ export default function Home() {
                             <Autocomplete
                                 disablePortal
                                 id="combo-box-demo"
-                                freeSolo
                                 options={fromStationsList}
                                 sx={{ width: 300 }}
-                                value={fromValue}
-                                onChange={(e, selected: IList) =>
-                                    searchValue(selected?.value, true)
+                                onChange={(e, selected) =>
+                                    searchValue(selected?.value as string, true)
                                 }
                                 renderInput={(params) => (
                                     <TextField
@@ -71,16 +70,15 @@ export default function Home() {
                             <Autocomplete
                                 disablePortal
                                 id="combo-box-demo"
-                                freeSolo
                                 options={toStationsList}
                                 sx={{ width: 300 }}
-                                value={toValue}
-                                onChange={(e, selected: IList) => searchValue(selected?.value)}
+                                onChange={(e, selected) => searchValue(selected?.value as string)}
                                 renderInput={(params) => (
                                     <TextField
                                         {...params}
                                         placeholder="To"
                                         required
+                                        value={toValue}
                                         onChange={(e) => searchValue(e.target.value)}
                                     />
                                 )}

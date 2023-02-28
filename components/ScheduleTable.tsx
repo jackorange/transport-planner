@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -7,10 +6,13 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import { IConnection } from '@/types/types';
+import * as React from 'react';
+
 import { timestampToDate } from '@/helpers/formatDate';
-import ScheduleModal from './ScheduleModal';
+import { IConnection } from '@/types/types';
+
 import ScheduleDetails from './ScheduleDetails';
+import ScheduleModal from './ScheduleModal';
 
 interface Column {
     id: 'direction' | 'departure' | 'arrivalTime' | 'journeyLength' | 'stopOversAmount';
