@@ -1,10 +1,9 @@
+import { FC } from 'react';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import Typography from '@mui/material/Typography';
-import React from 'react';
-
 import { timestampToDate } from '@/helpers/formatDate';
 import { IConnection } from '@/types/types';
 
@@ -12,7 +11,7 @@ interface IScheduleDetails {
     connection?: IConnection;
 }
 
-const ScheduleDetails: React.FC<IScheduleDetails> = ({ connection }) => {
+const ScheduleDetails: FC<IScheduleDetails> = ({ connection }) => {
     const renderConnectionSections = () => {
         return connection?.sections.map((el) => {
             return (
@@ -38,13 +37,13 @@ const ScheduleDetails: React.FC<IScheduleDetails> = ({ connection }) => {
         });
     };
     return (
-        <div>
+        <>
             <Typography marginBottom={3} fontWeight="bold">
                 {connection?.from.station.name} - {connection?.to.station.name}
             </Typography>
             <Typography marginBottom={3}>Sections </Typography>
             {renderConnectionSections()}
-        </div>
+        </>
     );
 };
 

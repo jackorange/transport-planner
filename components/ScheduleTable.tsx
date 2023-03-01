@@ -1,3 +1,5 @@
+import { useEffect, useState, FC } from 'react';
+import Link from 'next/link';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -6,15 +8,12 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import * as React from 'react';
-
 import { timestampToDate } from '@/helpers/formatDate';
 import { IConnection } from '@/types/types';
-
 import ScheduleDetails from './ScheduleDetails';
 import ScheduleModal from './ScheduleModal';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import Link from 'next/link';
+
 interface Column {
     id: 'direction' | 'departure' | 'arrivalTime' | 'journeyLength' | 'stopOversAmount';
     label: string;
@@ -59,14 +58,14 @@ interface IScheduleTable {
     connections: IConnection[];
 }
 
-export const ScheduleTable: React.FC<IScheduleTable> = ({ connections }) => {
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(10);
-    const [tableData, setTableData] = React.useState<Data[]>();
-    const [isModalOpen, setIsModalOpen] = React.useState(false);
-    const [modalConnection, setModalConnection] = React.useState<IConnection>();
+export const ScheduleTable: FC<IScheduleTable> = ({ connections }) => {
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [tableData, setTableData] = useState<Data[]>();
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [modalConnection, setModalConnection] = useState<IConnection>();
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (connections && connections.length > 0) {
             const formattedData = connections.map((el) => {
                 return createData(

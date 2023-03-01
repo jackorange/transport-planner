@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
-import * as React from 'react';
+import { FC } from 'react';
 
 const style = {
     position: 'absolute' as const,
@@ -20,7 +20,7 @@ interface IScheduleModal {
     children: React.ReactNode;
 }
 
-const ScheduleModal: React.FC<IScheduleModal> = ({ isOpen, onCloseModal, children }) => {
+const ScheduleModal: FC<IScheduleModal> = ({ isOpen, onCloseModal, children }) => {
     return (
         <div>
             <Modal
