@@ -31,8 +31,14 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+## Deploy
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Application will be deployed to Vercel. To start CI/CD process you need to push changes to main branch and wait few minutes until server will restart with updates and that's it! Url for app: <https://transport-planner-amber.vercel.app/>
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## How to use the app
+
+1. Main page: You need to set data for two input fields: "From" & "To, both are required. It's autcomplete inputs so they will suggest you exisiting stations to choose. Start to type name of the city/station and choose the correct one and click "Search".
+2. Schedule page: After clicking "Search" on Main page you will be redirected to page with schedule for direction you choose ("From" & "To" params are reflected in URL so you can reuse this link for instance to share with your friends.). Here you will see table with all nearest connections for your destination with some details. If results more than 10 you need to use navigation at the bottom of the page to see further departure connections.
+If you want go back on Main page you need to click on arrow that placed on top left corner from the table (or just use browser go back functionality). If you want to see details about specific connection you need to click on it in Schedule table row and after that modal (Schedule details) with connection details will appear.
+3. Schedule details: This page contains info about your direction and every interchange with details. To close it just click outside of modal.
+
