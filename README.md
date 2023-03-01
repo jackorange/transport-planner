@@ -37,6 +37,8 @@ Application will be deployed to Vercel. To start CI/CD process you need to push 
 
 ## How to use the app
 
+Application supports system based theme (dark & light mode).
+
 1. Main page: You need to set data for two input fields: "From" & "To, both are required. It's autcomplete inputs so they will suggest you exisiting stations to choose. Start to type name of the city/station and choose the correct one and click "Search".
 2. Schedule page: After clicking "Search" on Main page you will be redirected to page with schedule for direction you choose ("From" & "To" params are reflected in URL so you can reuse this link for instance to share with your friends.). Here you will see table with all nearest connections for your destination with some details. If results more than 10 you need to use navigation at the bottom of the page to see further departure connections.
 If you want go back on Main page you need to click on arrow that placed on top left corner from the table (or just use browser go back functionality). If you want to see details about specific connection you need to click on it in Schedule table row and after that modal (Schedule details) with connection details will appear.
