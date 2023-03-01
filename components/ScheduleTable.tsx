@@ -13,7 +13,8 @@ import { IConnection } from '@/types/types';
 
 import ScheduleDetails from './ScheduleDetails';
 import ScheduleModal from './ScheduleModal';
-
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import Link from 'next/link';
 interface Column {
     id: 'direction' | 'departure' | 'arrivalTime' | 'journeyLength' | 'stopOversAmount';
     label: string;
@@ -103,62 +104,71 @@ export const ScheduleTable: React.FC<IScheduleTable> = ({ connections }) => {
     };
 
     return (
-        <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-            <TableContainer sx={{ maxHeight: 440 }}>
-                <Table stickyHeader aria-label="sticky table">
-                    <TableHead>
-                        <TableRow>
-                            {columns.map((column) => (
-                                <TableCell
-                                    key={column.id}
-                                    align={column.align}
-                                    style={{ minWidth: column.minWidth }}>
-                                    {column.label}
-                                </TableCell>
-                            ))}
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {tableData &&
-                            tableData
-                                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                .map((row) => {
-                                    return (
-                                        <TableRow
-                                            hover
-                                            role="checkbox"
-                                            tabIndex={-1}
-                                            key={row.departure}
-                                            onClick={() => redirectToDetailsPage(row)}>
-                                            {columns.map((column) => {
-                                                const value = row[column.id];
-                                                return (
-                                                    <TableCell key={column.id} align={column.align}>
-                                                        {column.format && typeof value === 'number'
-                                                            ? column.format(value)
-                                                            : value}
-                                                    </TableCell>
-                                                );
-                                            })}
-                                        </TableRow>
-                                    );
-                                })}
-                    </TableBody>
-                </Table>
-            </TableContainer>
-            <TablePagination
-                rowsPerPageOptions={[10, 25, 100]}
-                component="div"
-                count={(tableData && tableData.length) || 0}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-            />
-            <ScheduleModal onCloseModal={() => setIsModalOpen(false)} isOpen={isModalOpen}>
-                <ScheduleDetails connection={modalConnection} />
-            </ScheduleModal>
-        </Paper>
+        <div>
+            {' '}
+            <Link href={'/'}>
+                <ArrowBackIcon />
+            </Link>
+            <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+                <TableContainer sx={{ maxHeight: 440 }}>
+                    <Table stickyHeader aria-label="sticky table">
+                        <TableHead>
+                            <TableRow>
+                                {columns.map((column) => (
+                                    <TableCell
+                                        key={column.id}
+                                        align={column.align}
+                                        style={{ minWidth: column.minWidth }}>
+                                        {column.label}
+                                    </TableCell>
+                                ))}
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {tableData &&
+                                tableData
+                                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                    .map((row) => {
+                                        return (
+                                            <TableRow
+                                                hover
+                                                role="checkbox"
+                                                tabIndex={-1}
+                                                key={row.departure}
+                                                onClick={() => redirectToDetailsPage(row)}>
+                                                {columns.map((column) => {
+                                                    const value = row[column.id];
+                                                    return (
+                                                        <TableCell
+                                                            key={column.id}
+                                                            align={column.align}>
+                                                            {column.format &&
+                                                            typeof value === 'number'
+                                                                ? column.format(value)
+                                                                : value}
+                                                        </TableCell>
+                                                    );
+                                                })}
+                                            </TableRow>
+                                        );
+                                    })}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+                <TablePagination
+                    rowsPerPageOptions={[10, 25, 100]}
+                    component="div"
+                    count={(tableData && tableData.length) || 0}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                />
+                <ScheduleModal onCloseModal={() => setIsModalOpen(false)} isOpen={isModalOpen}>
+                    <ScheduleDetails connection={modalConnection} />
+                </ScheduleModal>
+            </Paper>
+        </div>
     );
 };
 
